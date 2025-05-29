@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=400, initial-scale=1">
+    <title>Cyber Camera</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+    <!-- Magnific Popup core CSS file -->
+    <link rel="stylesheet" href="static/magnific-popup.css">
+    <link rel="stylesheet" href="static/application.css">
+
+    <!-- Magnific Popup core JS file -->
+    <script src="static/jquery.magnific-popup.js"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='RecordRTC.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='application.js') }}"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='addtohomescreen.css') }}">
+    <script src="{{ url_for('static', filename='addtohomescreen.js') }}"></script>
+    <link rel="apple-touch-icon" href="{{ url_for('static', filename='icon-152x152.png') }}" sizes="152x152" />
+    <link rel="apple-touch-icon" href="{{ url_for('static', filename='icon-16x16.png') }}" sizes="16x16" />
+    <script>
+addToHomescreen();
+</script>
+</head>
+<body>
+<div class="navbar navbar-inverse bg-inverse" role="navigation">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a href= "#" class="navbar-brand">
+            <img alt="Cyber Camera"  src="{{ url_for('static', filename='logo_prim.png') }} " width="250" height="30" >
+        </a>
+    </div>
+    <div class="collapse navbar-collapse navbar-ex1-collapse">
+        <ul class="nav navbar-nav pull-left">
+            <li data-toggle="modal" data-target="#aboutModal" ><a href="#">About</a></li>
+        </ul>
+    </div>
+</div>
+
+<div id="aboutModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">About</h4>
+            </div>
+            <div class="modal-body">
+                <p>Cyber Camera is an application that turns your old or simple webcam into a smart security home surveillance system </p>
+                <p>You are welcome to the <a href="https://github.com/amirfefer/Cyber-Camera"> GitHub </a> project site , and be a part of it </p>
+                <p>If you encounter a bug, please <a href="mailto:amirfefer@gmail.com?Subject=Cyber-Camera" target="_top">email me </a>, or open an <a href="https://github.com/amirfefer/Cyber-Camera/issues/new"> issue </a> in GitHub</p>
+                <br>
+                <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                    <input type="hidden" name="cmd" value="_s-xclick">
+                    <input type="hidden" name="hosted_button_id" value="YMMWTJDFKM68A">
+                    <input type="image" src="https://www.paypalobjects.com/en_GB/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="PayPal – The safer, easier way to pay online.">
+                    <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <p align="center"><i> By Amir Fefer </i></p>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="bs-example">
+    <ul class="nav nav-tabs" id="myTab">
+        <li class="active"><a href="#sectionA">Stream <i class="glyphicon glyphicon-facetime-video"></i></a></li>
+        <li><a href="#sectionB">Active <i class="glyphicon glyphicon-flash"></i></a></li>
+        <li><a href="#sensors">Sensors & Controls <i class="glyphicon glyphicon-tasks"></i></a></li>
+        <li><a href="#settings">Cloud <i class="glyphicon glyphicon-cloud"></i></a></li>
+    </ul>
+
+    <div class="tab-content">
+        <div align="center" id="sectionA" class="tab-pane fade in active">
+            <h3 align="left">Stream</h3>
+            <br>
+            <div id="cloud-note" class="alert alert-info fade in center">
+                <a href="#" class="close" data-dismiss="alert">&times;</a>
+                <strong>{{error}} Your next video record will upload to cloud </strong>
+            </div>
+            <br>
+            <br/>
+            <div class="imagewrap">
+                <div id="stream">
+                    <a href="/video_feed" class="test-popup-link"><IMG id="bg" SRC="/video_feed" width="320" height="240"></a>
+                </div>
+                <div class="btn-group-vertical btn-group-md inButtons" id="navbar-upper">
+                    <button type="button" id="toggle-bars" class="btn btn-primary" title="Show / Hide menu bar"><span class="glyphicon glyphicon-menu-hamburger"/></button>
+                    <button type="button" class="btn btn-warning" id="btn-cloud" data-toggle="buttons-checkbox" title="While its marked, all your videos and photos will save at your cloud service"><span class="glyphicon glyphicon-cloud"/></button>
+                    <button type="button" id="btn-toggle-video" class="btn btn-warning" title="Record"><span class="glyphicon glyphicon-film"/> </button>
+                    <button type="button" id="btn-image" class="btn btn-warning" title="Capture a Photo" onclick="document.location.href='get_frame?options=save';"><span class="glyphicon glyphicon-camera"/></button>
+                    <button type="button" id="btn-sound" class="btn btn-warning" title="Record yourself and play it at home"><span class="glyphicon glyphicon-volume-up"/></button>
+                    <button type="button" id="btn-lg2" class="btn btn-warning" title="Download a Photo" onclick="document.location.href='get_frame';"><span class="glyphicon glyphicon-download-alt"/></button>
+                </div>
+                <div class="btn-group btn-group-xs in-bottom-buttons" id="navbar-bottom">
+                    <button type="button" id="btn-small" class="btn btn-warning">Small</button>
+                    <button type="button" id="btn-med" class="btn btn-warning">Medium</button>
+                    <button type="button" id="btn-lg" class="btn btn-warning">Large</button>
+                </div>
+            </div>
+            <p></p>
+        </div>
+
+        <div id="sectionB" class="tab-pane fade">
+            <h3>Active Security</h3>
+            <br>
+            {% if online != None and online.is_alive() %}
+            <script>
+            $('#note').alert('close');
+            </script>
+            <div class="alert alert-danger center">
+                <strong>Important!</strong> The Online Security is already active
+                <br>
+            </div>
+            <form action="toggle_online" method="post">
+                <button type="submit" class="btn btn-warning" name="submit" value="off">Stop Active Secure</button>
+            </form>
+            {% else %}
+            <br>
+            <form action="toggle_online" method="post" class="form-horizontal" role="form">
+                <div class="form-group">
+                    <label for="detection" class="control-label col-md-2">Detection Method:</label>
+                    <div class="col-md-6">
+                        <select name="method" class="form-control" id="detection">
+                            <option value="move">Movement Detection</option>
+                            <option value="face">Face Detection</option>
+                            <option value="ubody">Upper Body Detection</option>
+                            <option value="fbody">Full Body Detection</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="slider" class="control-label col-md-2">Sensitivity</label>
+                    <div class="col-md-6">
+                        <input type="range" name="sensitive" id="slider" min="1" max="5" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <div class="checkbox">
+                            <input type="checkbox" checked data-toggle="toggle" data-width="115" data-onstyle="warning" value="sound" name="chk-sound" data-on="Alarm"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <div class="checkbox">
+                            <input type="checkbox" checked data-width="115" data-toggle="toggle" data-onstyle="warning" value="mail" name="chk-mail" data-on="Email"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <div class="checkbox">
+                            <input type="checkbox" checked data-width="115" data-toggle="toggle" data-onstyle="warning"  value="notification" name="chk-not" data-on="Notification"/>
+                        </div>
+                    </div>
+                </div>
+                <br/>
+                <br/>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <button type="submit" class="btn btn-info custom-button">Submit</button>
+                    </div>
+                </div>
+            </form>
+            {% endif %}
+        </div>
+
+        <!-- Sensors & Controls Tab -->
+        <div id="sensors" class="tab-pane fade">
+            <h3>Sensors & Controls</h3>
+            <hr>
+            <div class="row">
+                <!-- Sensor Data -->
+                <div class="col-md-6">
+                    <h4>Sensor Readings</h4>
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <strong>Ultrasonic Distance:</strong>
+                            <span id="ultrasonic-value">--</span> cm
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Temperature:</strong>
+                            <span id="temperature-value">--</span> &deg;C
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Humidity:</strong>
+                            <span id="humidity-value">--</span> %
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Security State:</strong>
+                            <span id="security-state-value">--</span>
+                        </li>
+                    </ul>
+                </div>
+                <!-- Actuator Controls -->
+                <div class="col-md-6">
+                    <h4>Actuator Controls</h4>
+                    <form id="actuator-controls">
+                        <!-- LEDs -->
+                        <div class="form-group">
+                            <label>LEDs:</label><br>
+                            <input type="checkbox" id="led-green" data-toggle="toggle" data-on="Green ON" data-off="Green OFF">
+                            <input type="checkbox" id="led-yellow" data-toggle="toggle" data-on="Yellow ON" data-off="Yellow OFF">
+                            <input type="checkbox" id="led-red" data-toggle="toggle" data-on="Red ON" data-off="Red OFF">
+                        </div>
+                        <!-- Buzzer -->
+                        <div class="form-group">
+                            <label>Buzzer:</label><br>
+                            <button type="button" id="buzzer-on" class="btn btn-danger btn-xs">Buzz On</button>
+                            <button type="button" id="buzzer-off" class="btn btn-default btn-xs">Buzz Off</button>
+                        </div>
+                        <!-- Servo -->
+                        <div class="form-group">
+                            <label>Servo (Door):</label><br>
+                            <button type="button" id="servo-open" class="btn btn-success btn-xs">Open</button>
+                            <button type="button" id="servo-close" class="btn btn-warning btn-xs">Close</button>
+                        </div>
+                        <!-- Security Active -->
+                        <div class="form-group">
+                            <label>Security System:</label><br>
+                            <button type="button" id="security-on" class="btn btn-info btn-xs">Activate</button>
+                            <button type="button" id="security-off" class="btn btn-default btn-xs">Deactivate</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div id="settings" class="tab-pane fade">
+            <h3>Settings</h3>
+            <h4>Cloud</h4>
+            <p align="center">For cloud support please register with Dropbox account once:</p>
+            <br>
+            <form action="/" method="post">
+                <div class="row">
+                    <div class="col-md-offset-4 col-md-4">
+                        <div class="input-group">
+                            <span class="input-group-btn">
+                                {% if dropbox != 'http://#' %}
+                                    <button class="btn btn-warning" type="button"
+                                        onclick="window.open('{{dropbox}}','popUpWindow','height=400,width=600,left=10,top=10,scrollbars=yes,menubar=no'); return false;">
+                                        Get Your code
+                                    </button>
+                                {% else %}
+                                    <button class="btn btn-warning" type="button" disabled>
+                                        Already Linked
+                                    </button>
+                                {% endif %}
+                            </span>
+                            <input type="text" name="code" class="form-control" placeholder="Enter Your code Here...">
+                            <div class="input-group-btn">
+                                <button class="btn btn-info" type="submit">Go!</button>
+                            </div>
+                        </div><!-- /input-group -->
+                        {% if dropbox == 'http://#' %}
+                            <p style="color:red; margin-top:10px;">
+                                Dropbox is already connected. To re-link, set <code>token = none</code> in your config and restart the server.
+                            </p>
+                        {% endif %}
+                    </div><!-- /.col-lg-6 -->
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- MQTT JS for Sensors & Controls Tab -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.1.0/mqttws31.min.js"></script>
+<script>
+    // MQTT Setup
+    var client = new Paho.MQTT.Client("broker.hivemq.com", 8000, "webclient_" + parseInt(Math.random() * 100, 10));
+    client.onMessageArrived = onMessageArrived;
+    client.connect({onSuccess:onConnect});
+
+    function onConnect() {
+        client.subscribe("surveillance/ultrasonic");
+        client.subscribe("surveillance/dht22");
+        client.subscribe("surveillance/security_state");
+    }
+
+    function onMessageArrived(message) {
+        if (message.destinationName === "surveillance/ultrasonic") {
+            var data = JSON.parse(message.payloadString);
+            $('#ultrasonic-value').text(data.distance_cm ? data.distance_cm.toFixed(1) : "--");
+        } else if (message.destinationName === "surveillance/dht22") {
+            var data = JSON.parse(message.payloadString);
+            $('#temperature-value').text(data.temperature ? data.temperature.toFixed(1) : "--");
+            $('#humidity-value').text(data.humidity ? data.humidity.toFixed(1) : "--");
+        } else if (message.destinationName === "surveillance/security_state") {
+            $('#security-state-value').text(message.payloadString);
+        }
+    }
+
+    // Actuator Controls
+    $('#led-green, #led-yellow, #led-red').change(function() {
+        var payload = {
+            green: $('#led-green').prop('checked') ? 1 : 0,
+            yellow: $('#led-yellow').prop('checked') ? 1 : 0,
+            red: $('#led-red').prop('checked') ? 1 : 0
+        };
+        var msg = new Paho.MQTT.Message(JSON.stringify(payload));
+        msg.destinationName = "surveillance/led";
+        client.send(msg);
+    });
+
+    $('#buzzer-on').click(function() {
+        var msg = new Paho.MQTT.Message("on");
+        msg.destinationName = "surveillance/buzzer";
+        client.send(msg);
+    });
+    $('#buzzer-off').click(function() {
+        var msg = new Paho.MQTT.Message("off");
+        msg.destinationName = "surveillance/buzzer";
+        client.send(msg);
+    });
+
+    $('#servo-open').click(function() {
+        var msg = new Paho.MQTT.Message("open");
+        msg.destinationName = "surveillance/servo";
+        client.send(msg);
+    });
+    $('#servo-close').click(function() {
+        var msg = new Paho.MQTT.Message("close");
+        msg.destinationName = "surveillance/servo";
+        client.send(msg);
+    });
+
+    $('#security-on').click(function() {
+        var msg = new Paho.MQTT.Message("on");
+        msg.destinationName = "surveillance/security_state";
+        client.send(msg);
+    });
+    $('#security-off').click(function() {
+        var msg = new Paho.MQTT.Message("off");
+        msg.destinationName = "surveillance/security_state";
+        client.send(msg);
+    });
+</script>
+</body>
+</html>
